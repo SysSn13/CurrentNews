@@ -22,7 +22,7 @@ var loadfn = async function() {
         var by = story['by'];
         var time = story['time'];
         var url = story['url'];
-        var html = `<div class="card text-center">
+        var html = `<div class="card mb-3 text-center">
           <div class="card-header">
             by ${by}
           </div>
