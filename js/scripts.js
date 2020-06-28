@@ -1,69 +1,18 @@
-console.log("hello");
-
-
-var loadfn = async function() {
-  var url = "https://hacker-news.firebaseio.com/v0/topstories.json";
-  let response = await fetch(url);
-
-  if (response.ok) { // if HTTP-status is 200-299
-    // get the response body (the method explained below)
-    let json = await response.json();
-    console.log(json);
-    // $('#json-data').html(json);
-    var proxyUrl = "https://frozen-woodland-89280.herokuapp.com/";
-    for (key in json) {
-      var id = json[key];
-      itemurl = `https://hacker-news.firebaseio.com/v0/item/${id}.json`;
-      console.log(itemurl);
-      let r = await fetch(itemurl);
-      if (r.ok) {
-        story = await r.json();
-        var title = story['title'];
-        var by = story['by'];
-        var time = story['time'];
-        var url = story['url'];
-        var html = `<div class="card mb-3 text-center">
-          <div class="card-header">
-            by ${by}
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">${title}</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="${url}" class="btn btn-primary">Go somewhere</a>
-          </div>
-          <div class="card-footer text-muted">
-            ${time}
-          </div>
-        </div>`;
-        $('#topstories').append(html);
-        console.log(story);
-      } else {
-        console.log("HTTP-Error: " + response.status);
-      }
-    }
-  } else {
-    console.log("HTTP-Error: " + response.status);
-  }
-}
-
-// loadfn();
+var proxyUrl = "https://frozen-woodland-89280.herokuapp.com/";
 
 function toTimeZone(time, zone) {
-    var format = 'YYYY/MM/DD HH:mm:ss ZZ';
-    return moment(time, format).tz(zone).format(format);
+  var format = 'YYYY/MM/DD HH:mm:ss ZZ';
+  return moment(time, format).tz(zone).format(format);
 }
-
 tz = moment.tz.guess();
-
-console.log(tz);
-var dskd = async function() {
+// console.log(tz);
+var getLatestNews = async function() {
   var url = 'https://api.currentsapi.services/v1/latest-news?' +
     'language=en&' +
     'apiKey=RRSR82k62bGgfUgpVNMb2RXdlGpnfnIpgBS-r7ZKQFsF98vM';
   console.log(url);
   let response = await fetch(url);
-  if (response.ok) { // if HTTP-status is 200-299
-    // get the response body (the method explained below)
+  if (response.ok) {
     var json = await response.json();
     console.log(json);
     allNews = json['news'];
@@ -75,21 +24,19 @@ var dskd = async function() {
       var categories = news['category'];
       var language = news['language'];
       var published = news['published'];
-      // console.log(Date.parse(published));
-      published =toTimeZone(published,tz);
-      console.log(published);
+      published = toTimeZone(published, tz);
+      // console.log(published);
       var nurl = news['url'];
       var author = news['author'];
       var image;
       if (news['image'] != 'None')
         image = news['image'];
       else image = "https://ansionnachfionn.files.wordpress.com/2018/04/donald-trump-president-of-the-united-states-of-america.jpg";
-
       category_str = "<p>";
       for (var cat in categories) {
         category_str += `<a class="post-category cat-1" href="#">${categories[cat]}</a>`;
       }
-      category_str+="</p>";
+      category_str += "</p>";
       post_html_str = `    <div class="col-lg-4">
         						<div class="post">
         							<a class="post-img" href="${nurl}"><img src="${image}" class="rounded" alt="image"></a>
@@ -112,20 +59,46 @@ var dskd = async function() {
     //   window.location.href = $(this).attr("data-link");
     //   return false;
     // });
-
   } else {
     console.log("HTTP-Error: " + response.status);
   }
-
-  //
-  // var req = new Request(url);
-  // await fetch(url)
-  //   // .then(function(response) {
-  //   //   console.log("dsjds");
-  //   //   console.log(response.json());
-  //   // })
-  //   .then(response => response.json())
-  //   .then(data => console.log(data));
 }
-dskd();
-// curl https://api.currentsapi.services/v1/latest-news -G -d language=en -d apiKey=RRSR82k62bGgfUgpVNMb2RXdlGpnfnIpgBS-r7ZKQFsF98vM
+getLatestNews();
+var getCategories = async function() {
+  var url = 'https://api.currentsapi.services/v1/available/categories';
+  var res = await fetch(url);
+  if (res.ok) {
+    json = await res.json();
+    categories = json['categories'];
+    console.log(json);
+    for (var i in categories) {
+      var cat = `<li>${categories[i]}</li>`;
+      $('#cats-list').append(cat);
+      console.log(cat);
+    }
+
+  } else {
+    console.log("Error:" + res.status);
+  }
+}
+
+getCategories();
+
+
+$(document).ready(function() {
+  $("#sidebar").mCustomScrollbar({
+    theme: "minimal"
+  });
+
+  $('#dismiss, .overlay').on('click', function() {
+    $('#sidebar').removeClass('active');
+    $('.overlay').removeClass('active');
+  });
+
+  $('#sidebarCollapse').on('click', function() {
+    $('#sidebar').addClass('active');
+    $('.overlay').addClass('active');
+    $('.collapse.in').toggleClass('in');
+    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+  });
+});
