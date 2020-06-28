@@ -152,7 +152,7 @@ p, div {
 }
 
 body {
-  background: url(images/cream_dust.png) ;
+  background: url(../images/cream_dust.png) ;
   background-repeat: repeat;
   background-size: 100px 100px;
 }
@@ -194,3 +194,11 @@ text-decoration: None;
 color: black;
 opacity: .9;
 }
+
+<!--[if gte IE 9]>
+<style type="text/css">
+  .gradient {
+     filter: none;
+  }
+</style>
+<![endif]-->

@@ -34,7 +34,7 @@ var loadfn = async function() {
           <div class="card-footer text-muted">
             ${time}
           </div>
-        </div>`
+        </div>`;
         $('#topstories').append(html);
         console.log(story);
       } else {
@@ -48,6 +48,14 @@ var loadfn = async function() {
 
 // loadfn();
 
+function toTimeZone(time, zone) {
+    var format = 'YYYY/MM/DD HH:mm:ss ZZ';
+    return moment(time, format).tz(zone).format(format);
+}
+
+tz = moment.tz.guess();
+
+console.log(tz);
 var dskd = async function() {
   var url = 'https://api.currentsapi.services/v1/latest-news?' +
     'language=en&' +
@@ -67,6 +75,9 @@ var dskd = async function() {
       var categories = news['category'];
       var language = news['language'];
       var published = news['published'];
+      // console.log(Date.parse(published));
+      published =toTimeZone(published,tz);
+      console.log(published);
       var nurl = news['url'];
       var author = news['author'];
       var image;
