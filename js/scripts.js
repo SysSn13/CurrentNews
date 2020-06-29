@@ -6,15 +6,21 @@ function toTimeZone(time, zone) {
 }
 tz = moment.tz.guess();
 // console.log(tz);
+
+var apiTokens = ['RouNhR0LOjaM_dmH-ERyWrsBGcoi4e8ym8Ou-AIxAI-6ZEJK','-FpkFe-fX2PtaKfHmiv3cMbeAenJkXQ4xm87ji2Aw6dqmzUl','i4SQAt180GMqV99ThBklMFOKvcEe-CS4HrKyPv7QTq2WjPvS'];
+
+var apiUsers = ['kuku','kuku1','kuku2'];
+var keyIndex =0;
+var maxTry=0;
 var getLatestNews = async function() {
   var url = 'https://api.currentsapi.services/v1/latest-news?' +
     'language=en&' +
-    'apiKey=RRSR82k62bGgfUgpVNMb2RXdlGpnfnIpgBS-r7ZKQFsF98vM';
-  console.log(url);
+    `apiKey=${apiTokens[keyIndex]}`;
+  // console.log(url);
   let response = await fetch(url);
   if (response.ok) {
     var json = await response.json();
-    console.log(json);
+    // console.log(json);
     allNews = json['news'];
     for (var key in allNews) {
       var news = allNews[key];
@@ -61,6 +67,16 @@ var getLatestNews = async function() {
     // });
   } else {
     console.log("HTTP-Error: " + response.status);
+    if(maxTry<=apiTokens.length)
+    {
+    keyIndex = (keyIndex+1)%apiTokens.length;
+    maxTry++;
+    console.log(maxTry);
+    getLatestNews();
+    }
+    else {
+      console.log("connection error!");
+    }
   }
 }
 getLatestNews();
@@ -70,11 +86,11 @@ var getCategories = async function() {
   if (res.ok) {
     json = await res.json();
     categories = json['categories'];
-    console.log(json);
+    // console.log(json);
     for (var i in categories) {
       var cat = `<li>${categories[i]}</li>`;
       $('#cats-list').append(cat);
-      console.log(cat);
+      // console.log(cat);
     }
 
   } else {
