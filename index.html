@@ -23,6 +23,10 @@
 </head>
 
 <body>
+  <div class="loader" id="loading">
+    <img width="150" height="150" src="images/ajax-loader.gif" alt="loading...">
+  </div>
+
 
   <div class="wrapper">
     <!-- Sidebar  -->
@@ -30,67 +34,98 @@
       <div id="dismiss">
         <i class="fas fa-arrow-left"></i>
       </div>
-
       <div class="sidebar-header">
         <h3>CurrentNews</h3>
       </div>
-
       <p>categories </p>
       <ul id="cats-list">
-
       </ul>
-
-
     </nav>
+
+
+
 
     <!-- Page Content  -->
     <div id="content">
 
-      <nav class="navbar navbar-expand-sm navbar-light bg-warning">
+      <nav class="navbar navbar-expand-sm navbar-light">
+
+
         <div class="container-fluid">
           <button type="button" id="sidebarCollapse" class="sidebar-toggler">
             <i class="fas fa-align-left"></i>
           </button>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <a class="navbar-brand" href="#" onclick="location.reload();"> CurrentNews</a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <!-- <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active Carter-font" aria-current="page" href="#">Home</a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+              <!-- <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link Carter-font" href="#">Contact</a>
+                <a class="nav-link" href="#">Link</a>
               </li>
-               <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-            </ul> -->
-            <a class="navbar-brand m-auto" href="#"> CurrentNews</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              </li> -->
+            </ul>
 
-            <form class="d-flex">
-              <input class="form-control mr-2 Carter-font" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-dark Carter-font" type="submit">Search</button>
-            </form>
+            <div class="d-flex ">
+              <input class="form-control mr-2 Carter-font" type="search" placeholder="Search keyword" aria-label="Search" id="searchKeyward">
+              <button class="btn btn-outline-dark Carter-font" id="searchButton">Search</button>
+            </div>
           </div>
+
         </div>
       </nav>
-      <div class="container">
-
-        <div class="row" id="topstories">
-          <div class="text-center mt-5 mb-5">
-            <h1>Latest News</h1>
-          </div>
-        </div>
-      </div>
 
     </div>
+    <div class="container">
+      <div class="text-center mt-5 mb-5">
+        <h1>Latest News</h1>
+      </div>
+      <div class="row" id="newsdiv" hidden>
+
+      </div>
+    </div>
+
   </div>
 
+  <!-- Footer -->
+  <footer class="page-footer font-small mt-auto footer">
+
+    <!-- Copyright -->
+    <div class="text-center py-3">
+      <h5>Developed by <span class="font-weight-bolder"><a href="https://github.com/sudesh1122">Sudesh Chaudhary</a></span></h5>
+      <h6>Copyright &copy;<script>
+          document.write(new Date().getFullYear());
+        </script> All rights reserved</h6>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
 
   <script src="js/jquery-3.5.1.js"></script>
   <script src="js/moment.js"></script>
   <script src="js/moment-timezone-with-data.js"></script>
+  <script data-ad-client="ca-pub-7334877242717971" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <!-- Popper.JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 

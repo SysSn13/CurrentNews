@@ -152,7 +152,8 @@ p, div {
 }
 
 body {
-  background: url(../images/cream_dust.png) ;
+  /* background: url(../images/cream_dust.png) ; */
+  background: #e5eaf5;
   background-repeat: repeat;
   background-size: 100px 100px;
 }
@@ -294,7 +295,7 @@ opacity: .9;
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #ffb200;
+    background: #d0bdf4;
 }
 
 
@@ -312,4 +313,119 @@ opacity: .9;
       margin-right: 0;
       margin-bottom:0;
     }
+}
+
+/* /////////////////////////////////////////////////////// */
+
+
+body {
+  background: #eaecfa;
+}
+
+.loader {
+  width: 250px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-family: helvetica, arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: #ce4233;
+  letter-spacing: 0.2em;
+
+  &::before, &::after {
+    content: "";
+    display: block;
+    width: 15px;
+    height: 15px;
+    background: #ce4233;
+    position: absolute;
+    animation: load .7s infinite alternate ease-in-out;
+  }
+
+  &::before {
+    top: 0;
+  }
+
+  &::after {
+    bottom: 0;
+  }
+}
+
+@keyframes load {
+  0% { left: 0; height: 30px; width: 15px }
+  50% { height: 8px; width: 40px }
+  100% { left: 235px; height: 30px; width: 15px}
+}
+
+
+/* /////////////////////////////////////////////////////// */
+/* for footer */
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
+}
+/*
+Bright blue: #51e2f5
+
+Blue Green: #9df9ef
+
+Dusty White: #edf756
+
+Pink Sand: #ffa8B6
+
+Dark Sand: #a28089 */
+
+
+/* Ice Cold: #a0d2eb
+
+Freeze Purple: #e5eaf5
+
+Medium Purple: #d0bdf4
+
+Purple Pain: #8458B3
+
+Heavy Purple: #494D5F */
+/**
+ * Footer Styles
+ */
+.navbar {
+background: #a0d2eb;
+}
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #494D5F ;
+  text-align: center;
+}
+
+.footer a {
+  text-decoration:None;
+  color: black;
+}
+
+
+.footer a:hover {
+text-decoration: None;
+color: black;
+opacity: .7;
 }
