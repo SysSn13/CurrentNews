@@ -15,8 +15,15 @@ function getKeyIndex() {
 }
 
 class LatestNews {
-  constructor() {
-    this.url = 'https://api.currentsapi.services/v1/latest-news?' +
+  constructor(categories) {
+    var category_str = "";
+    for (var i = 0; i < categories.length; i++) {
+      category_str += categories[i] + ",";
+    }
+    if(category_str.length)
+    category_str = category_str.slice(0,-1);
+    console.log(category_str);
+    this.url = `https://api.currentsapi.services/v1/latest-news?category=${category_str}&` +
       'language=en&' +
       `apiKey=`;
   }
@@ -34,6 +41,8 @@ class GetNews {
     this._key_index = getKeyIndex();
     this._max_try = 0;
     this._type = type;
+    $('#loading').prop('hidden', false);
+    $('#newsdiv').prop('hidden', true);
   }
 
   async get_data() {
@@ -76,24 +85,24 @@ class GetNews {
           // console.log(published);
           var nurl = news['url'];
           var author = news['author'];
-          var image;
+          var img_str;
           if (news['image'] != 'None')
-            image = news['image'];
-          else image = "https://ansionnachfionn.files.wordpress.com/2018/04/donald-trump-president-of-the-united-states-of-america.jpg";
+          img_str =`<a class="post-img" href="${nurl}" target="_blank"><img src="${news['image']}" class="rounded" alt="image"></a>`;
+          else img_str='';
           var category_str = "<p>";
           for (var cat in categories) {
             category_str += `<a class="post-category cat-1" href="#">${categories[cat]}</a>`;
           }
           category_str += "</p>";
-          var post_html_str = `    <div class="col-lg-4">
+          var post_html_str = `    <div class="col-lg-4 mt-3 mb-3">
                       <div class="post">
-                        <a class="post-img" href="${nurl}"><img src="${image}" class="rounded" alt="image"></a>
+                        ${img_str}
                         <div class="post-body p-3">
                           <div class="post-meta">
                             ${category_str}
                             <span class="post-date">${published}</span>
                           </div>
-                          <a href="${nurl}" type="button">
+                          <a href="${nurl}" type="button" target="_blank">
                           <h3 class="post-title"><strong>${title}</strong></h3>
                           <p class="mt-1">${description}</p>
                            </a>
@@ -126,14 +135,12 @@ class GetNews {
 }
 
 $(document).ready(async function() {
-  var latestNews = new LatestNews();
+  var latestNews = new LatestNews([]);
   var getLatestNews = new GetNews(latestNews.url, 'latest');
   getLatestNews.get_data();
   $('#searchButton').click(function() {
     var val = $('#searchKeyward').val();
     if (val != '') {
-      $('#loading').prop('hidden', false);
-      $('#newsdiv').prop('hidden', true);
       var searchNews = new SearchNews(val);
       var searchResult = new GetNews(searchNews.url, 'search');
       searchResult.get_data();
@@ -141,7 +148,11 @@ $(document).ready(async function() {
   });
 });
 
-var getCategories = async function() {
+function capitalize(word) {
+  return word[0].toUpperCase() + word.slice(1).toLowerCase();
+}
+
+var setCategories = async function() {
   var url = 'https://api.currentsapi.services/v1/available/categories';
   var res = await fetch(url);
   if (res.ok) {
@@ -149,7 +160,10 @@ var getCategories = async function() {
     categories = json['categories'];
     // console.log(json);
     for (var i in categories) {
-      var cat = `<li>${categories[i]}</li>`;
+      var cat = `<div class="form-check mb-4">
+        <input class="form-check-input" name="category" type="checkbox" id="${categories[i]}" value="${categories[i]}">
+        <label class="form-check-label Carter-font" for="${categories[i]}">${capitalize(categories[i])}</label>
+      </div>`;
       $('#cats-list').append(cat);
       // console.log(cat);
     }
@@ -158,8 +172,23 @@ var getCategories = async function() {
     console.log("Error:" + res.status);
   }
 }
-getCategories();
+setCategories();
 
+function userCategories() {
+  var cats = [];
+  $('#cats-list input:checked').each(function() {
+    cats.push($(this).val());
+  });
+  return cats;
+}
+
+$('#reloadFeedButton').click(function() {
+  var cats = userCategories();
+  var reloadNewstype = new LatestNews(cats);
+  var reloadNews = new GetNews(reloadNewstype.url, 'latest');
+  reloadNews.get_data();
+
+});
 
 $(document).ready(function() {
   $("#sidebar").mCustomScrollbar({

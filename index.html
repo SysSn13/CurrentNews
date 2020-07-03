@@ -8,6 +8,8 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mdb.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
   <link href="http://fonts.googleapis.com/css?family=Corben:bold" rel="stylesheet" type="text/css">
   <link href="http://fonts.googleapis.com/css?family=Nobile" rel="stylesheet" type="text/css">
@@ -23,24 +25,25 @@
 </head>
 
 <body>
-  <div class="loader" id="loading">
+  <div class="loader-gif" id="loading">
     <img width="150" height="150" src="images/ajax-loader.gif" alt="loading...">
   </div>
 
-
   <div class="wrapper">
     <!-- Sidebar  -->
-    <nav id="sidebar">
+    <!-- <nav id="sidebar">
       <div id="dismiss">
         <i class="fas fa-arrow-left"></i>
       </div>
       <div class="sidebar-header">
         <h3>CurrentNews</h3>
       </div>
-      <p>categories </p>
-      <ul id="cats-list">
-      </ul>
-    </nav>
+      <div class="row">
+        <option type="button" class=" waves-effect waves-light" data-toggle="modal" data-target="#cats-modal">Categories</option>
+      </div>
+
+
+    </nav> -->
 
 
 
@@ -48,25 +51,28 @@
     <!-- Page Content  -->
     <div id="content">
 
+
       <nav class="navbar navbar-expand-sm navbar-light">
 
-
         <div class="container-fluid">
-          <button type="button" id="sidebarCollapse" class="sidebar-toggler">
-            <i class="fas fa-align-left"></i>
-          </button>
+
           <a class="navbar-brand" href="#" onclick="location.reload();"> CurrentNews</a>
 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item" data-toggle="modal" data-target="#cats-modal">
+                <a class="nav-link"> <span class="Carter-font clearfix  d-sm-inline-block">categories</span></a>
+              </li>
+
               <!-- <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <option type="button" class=" waves-effect waves-light" ></option>
+
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" data-toggle="modal" data-target="#cats-modal" href="#">Categories</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
@@ -86,16 +92,75 @@
               </li> -->
             </ul>
 
+
             <div class="d-flex ">
               <input class="form-control mr-2 Carter-font" type="search" placeholder="Search keyword" aria-label="Search" id="searchKeyward">
-              <button class="btn btn-outline-dark Carter-font" id="searchButton">Search</button>
+              <button class="btn btn-primary Carter-font" id="searchButton">Search</button>
             </div>
           </div>
 
         </div>
       </nav>
+      <!-- modal -->
+      <div class="modal fade right" id="cats-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="true" style="display: none;" data-gtm-vis-first-on-screen-2340190_1302="14311"
+        data-gtm-vis-total-visible-time-2340190_1302="100" data-gtm-vis-has-fired-2340190_1302="1" aria-hidden="true">
+        <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
+          <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+              <h3 class="heading lead">Choose Categories
+              </h3>
 
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" class="white-text">×</span>
+              </button>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+              <div class="text-center">
+                <i class="far fa-list-alt fa-4x mb-3 animated rotateIn"></i>
+                <h5>
+                  <strong>Your news test matters</strong>
+                </h5>
+                <h6>Choose your favourite categories...
+
+                </h6>
+              </div>
+
+              <hr>
+
+              <!-- Radio -->
+              <p class="text-center" style="font-weight:bold;">
+                Categories
+              </p>
+              <div id="cats-list">
+
+              </div>
+              <!-- <hr> -->
+
+
+              <!-- <p class="text-center Carter-font font-weight-light">
+              Click on load categories to update your news feed
+              </p> -->
+              <!--Basic textarea-->
+              <!-- <div class="md-form">
+                <textarea type="text" id="form79textarea" class="md-textarea form-control" rows="3"></textarea>
+                <label for="form79textarea">Your message</label>
+              </div> -->
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer justify-content-center">
+              <a type="button" class="Carter-font btn btn-info waves-effect waves-light" id="reloadFeedButton" data-dismiss="modal">Reload feed
+                <i class="fas fa-sync-alt ml-1"></i> </a>
+              <a type="button" class="btn Carter-font btn-outline-info waves-effect" data-dismiss="modal">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
     <div class="container">
       <div class="text-center mt-5 mb-5">
         <h1>Latest News</h1>
@@ -105,36 +170,41 @@
       </div>
     </div>
 
-  </div>
 
-  <!-- Footer -->
-  <footer class="page-footer font-small mt-auto footer">
+    <!-- Footer -->
+    <footer class="page-footer font-small mt-auto footer">
+      <a href="https://github.com/sudesh1122/CurrentNews" target="_blank" class="float-btn" data-toggle="tooltip" title="Github repo">
+      <i class="fab fa-github my-float-btn" aria-hidden="true"></i>
+      </a>
 
-    <!-- Copyright -->
-    <div class="text-center py-3">
-      <h5>Developed by <span class="font-weight-bolder"><a href="https://github.com/sudesh1122">Sudesh Chaudhary</a></span></h5>
-      <h6>Copyright &copy;<script>
-          document.write(new Date().getFullYear());
-        </script> All rights reserved</h6>
-    </div>
-    <!-- Copyright -->
 
-  </footer>
-  <!-- Footer -->
 
-  <script src="js/jquery-3.5.1.js"></script>
-  <script src="js/moment.js"></script>
-  <script src="js/moment-timezone-with-data.js"></script>
-  <script data-ad-client="ca-pub-7334877242717971" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <!-- Popper.JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+      <!-- Copyright -->
+      <div class="text-center py-3">
+        <h5>Developed by <span class="font-weight-bolder"><a href="https://github.com/sudesh1122" target="_blank">Sudesh Chaudhary</a></span></h5>
+        <h6>Copyright &copy;<script>
+            document.write(new Date().getFullYear());
+          </script> All rights reserved</h6>
+      </div>
+      <!-- Copyright -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
+    </footer>
+    <!-- Footer -->
 
-  <script src="js/scripts.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+    <script src="js/jquery-3.5.1.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/moment-timezone-with-data.js"></script>
+    <script data-ad-client="ca-pub-7334877242717971" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
+
+    <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 </body>
 
 </html>
